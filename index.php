@@ -106,6 +106,95 @@ echo DASHTURLASH_TILI;
 echo RANG;
 
 
+// PHP operators
+
+
+// Arithmetic operators
+
+$x = 10;    // x ga 10 yozildi
+$x += 5;    // $x = $x + 5;  natija 15
+$x -= 3;    // $x = $x - 3;  natija 12
+$x *= 2;    // $x = $x * 2;  natija 24
+$x /= 4;    // $x = $x / 4;  natija 6
+$x %= 4;    // $x = $x % 4;  natija 2
+echo $x;
+
+// Assignment operators
+
+$v = 10;    // x ga 10 yozildi
+$v += 5;    // $x = $x + 5;  natija 15
+$v -= 3;    // $x = $x - 3;  natija 12
+$v *= 2;    // $x = $x * 2;  natija 24
+$v /= 4;    // $x = $x / 4;  natija 6
+$v %= 4;    // $x = $x % 4;  natija 2
+echo $v;
+
+// Comparison operators
+// 1.   ==	qiymati teng
+// 2.  ===	qiymati ham, turi ham teng
+// 3.  !=	teng emas 
+// 4.  !==	qiymati yoki turi teng emas
+// 5.  > <	katta, kichik
+// 6.  >= <=	katta yoki teng, kichik yoki teng
+// 7.  <=>	“kosmik kema”: chap kichik bo’lsa -1, teng bo’lsa 0, katta bo’lsa 1
+
+// Increment/Decrement operators
+$I = 5;
+$I++;   // 6 bo'ldi  ($a = $a + 1)
+$I--;   // yana 5    ($a = $a - 1)
+echo $I;
+
+
+// Logical operators
+
+$yosh = 20;
+$pasport = true;
+
+if ($yosh >= 18 && $pasport) {
+    echo "Kirishingiz mumkin";   // ikkala shart ham to'g'ri
+}
+
+if (!$pasport) {
+    echo "Pasport yo'q";        // pasport bo'lmasa ishlaydi
+}
+// and bolsa shartlar hammasi tekshiriladi qoshilib ketiladi shartlar
+// agar || bu belgi yoki 'or'  bolsa kamida bittasi togri bolsa ishlaydi
+// 'xor'	faqat bitta shart togri bolsa ishlaydi
+// ! esa teskarisiga almashtiradi
+
+// String operators
+$ism = "Ali";
+$salom = "Salom, " . $ism;   // "Salom, Ali"
+
+$salom .= "!";               // oxiriga qo'shadi: "Salom, Ali!"
+echo $salom;
+// Array operators
+// $a = ["x" => 1, "y" => 2];
+// $b = ["y" => 5, "z" => 3];
+
+// $c = $a + $b;   // ["x" => 1, "y" => 2, "z" => 3]
+
+// Conditional operators
+// $yosh = 19;
+// echo $yosh >= 18 ? "Katta" : "Kichik";   // Katta
+// bu yerda Ternary (? :) shartni tekshiradi bolmasa kichikni qaytaradi
+
+// if ni bir qatorda yozish usuli
+if ($yosh >= 18) {
+    echo "Katta";
+} else {
+    echo "Kichik";
+}
+
+$ism = $_GET["ism"] ?? "Mehmon";
+// $ism = "Ali";
+echo "Salom, " . $ism;
+
+echo "<pre>";
+print_r($_GET);   // $_GET ichida nima borligini ko'rsatadi
+echo "</pre>";
+// URL'da ism berilmagan bo'lsa, "Mehmon" ishlatiladi
+
 ?>
 
 
