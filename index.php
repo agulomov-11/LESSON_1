@@ -196,6 +196,132 @@ echo "</pre>";
 // URL'da ism berilmagan bo'lsa, "Mehmon" ishlatiladi
 
 ?>
+<?php
+
+
+// if
+//if.... else
+// If...elseif...else
+
+$x = 80;
+$y = 30;
+
+if ($x == $y) {
+    echo "x teng y ga";            // ikkalasi teng bolsa ishlaydi
+} elseif ($x > $y) {
+    echo "x y dan katta";          // x katta bolsa ishlaydi
+} else {
+    echo "x y dan kichkina";       // qolgan hamma holatda ishlaydi
+}
+// if birinchi shartni tekshiradi, togri bolsa shu yerda toxtaydi
+// elseif oldingi shart notogri bolsa keyingi shartni tekshiradi
+// else hech qaysi shart togri kelmasa ishlaydi
+
+echo "<br>";
+
+
+
+
+// Switch
+
+$rang = "yashil";
+
+switch ($rang) {
+    case "qizil":
+        echo "rang qizilga teng";   // $rang qizil bolsa
+        break;
+    case "sariq":
+    case "kok":
+        echo "rang sariq yoki kok"; // ikkita case bitta javob beradi
+        break;
+    case "yashil":
+        echo "rang yashilga teng";  // $rang yashil bolsa
+        break;
+    default:
+        echo "bu rang bizda yo'q";  // hech qaysi case togri kelmasa
+}
+// switch bitta ozgaruvchini kop qiymatlar bilan solishtiradi
+// break bolmasa keyingi case ham ishlab ketadi
+// default bu else ga oxshaydi
+
+echo "<br>";
+
+
+
+
+// Switch ni if bilan yozish
+
+if ($rang == "yashil") {
+    echo "rang yashilga teng";
+} elseif ($rang == "qizil") {
+    echo "rang qizilga teng";
+} else {
+    echo "bu rang bizda yo'q";
+}
+// natija switch bilan bir xil chiqadi
+// " " qoshtirnoq ishlatsak yo'q ichidagi ' uchun \ kerak emas
+
+
+
+
+
+
+
+// Loops (sikllar)
+
+// for
+for ($i = 1; $i <= 5; $i++) {
+    echo $i . " ";              // 1 2 3 4 5
+}
+// for da 3 qism bor: boshlanish; shart; qadam
+// necha marta aylanishi aniq bolsa ishlatiladi
+
+echo "<br>";
+
+// while
+$son = 1;
+while ($son <= 3) {
+    echo $son . " ";            // 1 2 3
+    $son++;                     // buni unutsak cheksiz aylanadi
+}
+// while avval shartni tekshiradi, keyin ishlaydi
+
+echo "<br>";
+
+// do ... while
+$son = 10;
+do {
+    echo $son;                  // 10 chiqadi, shart notogri bolsa ham
+    $son++;
+} while ($son <= 3);
+// do while kamida 1 marta ishlaydi, shartni keyin tekshiradi
+
+echo "<br>";
+
+// foreach
+$mevalar = ["olma", "anor", "uzum"];
+foreach ($mevalar as $meva) {
+    echo $meva . " ";           // olma anor uzum
+}
+// foreach massiv ichidagi har bir elementni bittalab oladi
+
+$odam = ["ism" => "Ali", "yosh" => 20];
+foreach ($odam as $kalit => $qiymat) {
+    echo "$kalit: $qiymat ";    // ism: Ali yosh: 20
+}
+// kalit va qiymatni ikkalasini ham olsa boladi
+
+echo "<br>";
+
+// break va continue
+for ($i = 1; $i <= 10; $i++) {
+    if ($i == 3) continue;      // 3 ni tashlab ketadi
+    if ($i == 6) break;         // 6 ga kelganda sikl toxtaydi
+    echo $i . " ";              // 1 2 4 5
+}
+// continue shu aylanishni otkazib yuboradi
+// break siklni butunlay toxtatadi
+?>
 
 
 
