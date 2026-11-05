@@ -9,7 +9,7 @@ echo 'dunyo'
  */
 
 // variable
-$variable = "o'zgaruvchilar";
+// $variable = "o'zgaruvchilar";   // hech qayerda ishlatilmagan
 $rang = "yashil<br>";
 $ism = "suhrob";
 $text = "Learn Php";
@@ -20,7 +20,7 @@ function qoshish()
     $b = "5";
     return $a + $b;
 }
-qoshish();
+// qoshish();       // natijasi hech qayerga ketmaydi, pastdagi echo yetarli
 echo qoshish();
 
 
@@ -38,26 +38,28 @@ null (empty variable)
 resource (references external resources) 
 */
 
-$srting = "hello";
-$int = 1234;
-$float = 1234.1234;
+// bu uchtasi faqat misol, hech qayerda ishlatilmagan
+// $srting = "hello";
+// $int = 1234;
+// $float = 1234.1234;
 $bolean = true . false; // true =1 , false = 0
 echo $bolean;
 $array = [
-    $name = "Abdulloh Gulomov",
-    $age = 23,
-    $number = +4571512402,
-    $email = "abdulloh.@gmail.com <br>"
+    "name"   => "Abdulloh Gulomov",
+    "age"    => 23,
+    "number" => +4571512402,
+    "email"  => "abdulloh.@gmail.com <br>"
 ];
+// oldin $name = ... deb yozilgan edi, u keraksiz 4 ta ozgaruvchi yaratib qoyardi
 print_r($array);
-$array2 = array();
+// $array2 = array();   // bosh massiv, ishlatilmagan
 
-class index
-{
-    public function __construct() {}
-};
+// class index           // bosh class, ishlatilmagan
+// {
+//     public function __construct() {}
+// };
 
-$s = null; // yoq 
+// $s = null; // yoq    // ishlatilmagan
 
 // string function
 
@@ -111,22 +113,24 @@ echo RANG;
 
 // Arithmetic operators
 
-$x = 10;    // x ga 10 yozildi
-$x += 5;    // $x = $x + 5;  natija 15
-$x -= 3;    // $x = $x - 3;  natija 12
-$x *= 2;    // $x = $x * 2;  natija 24
-$x /= 4;    // $x = $x / 4;  natija 6
-$x %= 4;    // $x = $x % 4;  natija 2
-echo $x;
+$birinchi = 10;
+$ikkinchi = 3;
+echo $birinchi + $ikkinchi;     // 13  qoshish
+echo $birinchi - $ikkinchi;     // 7   ayirish
+echo $birinchi * $ikkinchi;     // 30  kopaytirish
+echo $birinchi / $ikkinchi;     // 3.33  bolish
+echo $birinchi % $ikkinchi;     // 1   qoldiq
+echo $birinchi ** $ikkinchi;    // 1000  daraja (10 * 10 * 10)
+// oldin bu yerda pastdagi Assignment bilan bir xil kod turgan edi
 
 // Assignment operators
 
-$v = 10;    // x ga 10 yozildi
-$v += 5;    // $x = $x + 5;  natija 15
-$v -= 3;    // $x = $x - 3;  natija 12
-$v *= 2;    // $x = $x * 2;  natija 24
-$v /= 4;    // $x = $x / 4;  natija 6
-$v %= 4;    // $x = $x % 4;  natija 2
+$v = 10;    // v ga 10 yozildi
+$v += 5;    // $v = $v + 5;  natija 15
+$v -= 3;    // $v = $v - 3;  natija 12
+$v *= 2;    // $v = $v * 2;  natija 24
+$v /= 4;    // $v = $v / 4;  natija 6
+$v %= 4;    // $v = $v % 4;  natija 2
 echo $v;
 
 // Comparison operators
@@ -139,10 +143,10 @@ echo $v;
 // 7.  <=>	“kosmik kema”: chap kichik bo’lsa -1, teng bo’lsa 0, katta bo’lsa 1
 
 // Increment/Decrement operators
-$I = 5;
-$I++;   // 6 bo'ldi  ($a = $a + 1)
-$I--;   // yana 5    ($a = $a - 1)
-echo $I;
+$hisoblagich = 5;
+$hisoblagich++;   // 6 bo'ldi  ($hisoblagich = $hisoblagich + 1)
+$hisoblagich--;   // yana 5    ($hisoblagich = $hisoblagich - 1)
+echo $hisoblagich;
 
 
 // Logical operators
@@ -163,8 +167,8 @@ if (!$pasport) {
 // ! esa teskarisiga almashtiradi
 
 // String operators
-$ism = "Ali";
-$salom = "Salom, " . $ism;   // "Salom, Ali"
+$dost = "Ali";
+$salom = "Salom, " . $dost;  // "Salom, Ali"
 
 $salom .= "!";               // oxiriga qo'shadi: "Salom, Ali!"
 echo $salom;
@@ -186,9 +190,8 @@ if ($yosh >= 18) {
     echo "Kichik";
 }
 
-$ism = $_GET["ism"] ?? "Mehmon";
-// $ism = "Ali";
-echo "Salom, " . $ism;
+$mehmon = $_GET["ism"] ?? "Mehmon";
+echo "Salom, " . $mehmon;
 
 echo "<pre>";
 print_r($_GET);   // $_GET ichida nima borligini ko'rsatadi
@@ -224,18 +227,18 @@ echo "<br>";
 
 // Switch
 
-$rang = "yashil";
+$rangim = "yashil";
 
-switch ($rang) {
+switch ($rangim) {
     case "qizil":
-        echo "rang qizilga teng";   // $rang qizil bolsa
+        echo "rang qizilga teng";   // $rangim qizil bolsa
         break;
     case "sariq":
     case "kok":
         echo "rang sariq yoki kok"; // ikkita case bitta javob beradi
         break;
     case "yashil":
-        echo "rang yashilga teng";  // $rang yashil bolsa
+        echo "rang yashilga teng";  // $rangim yashil bolsa
         break;
     default:
         echo "bu rang bizda yo'q";  // hech qaysi case togri kelmasa
@@ -251,9 +254,9 @@ echo "<br>";
 
 // Switch ni if bilan yozish
 
-if ($rang == "yashil") {
+if ($rangim == "yashil") {
     echo "rang yashilga teng";
-} elseif ($rang == "qizil") {
+} elseif ($rangim == "qizil") {
     echo "rang qizilga teng";
 } else {
     echo "bu rang bizda yo'q";
@@ -288,12 +291,12 @@ while ($son <= 3) {
 
 echo "<br>";
 
-// do ... while
-$son = 10;
+// do ... while 
+$sanoq = 10;
 do {
-    echo $son;                  // 10 chiqadi, shart notogri bolsa ham
-    $son++;
-} while ($son <= 3);
+    echo $sanoq;                // 10 chiqadi, shart notogri bolsa ham
+    $sanoq++;
+} while ($sanoq <= 3);
 // do while kamida 1 marta ishlaydi, shartni keyin tekshiradi
 
 echo "<br>";
@@ -321,6 +324,186 @@ for ($i = 1; $i <= 10; $i++) {
 }
 // continue shu aylanishni otkazib yuboradi
 // break siklni butunlay toxtatadi
+
+
+
+echo "<br>";
+
+
+
+// Functions (funksiyalar)
+
+// oddiy funksiya
+function salomBer()
+{
+    echo "Salom dunyo";         // chaqirilganda shu ishlaydi
+}
+salomBer();                     // Salom dunyo
+// function sozi bilan yaratiladi, nomi bilan chaqiriladi
+// chaqirmasak hech narsa ishlamaydi
+
+echo "<br>";
+
+// parametrli funksiya
+function salomlash($ism)
+{
+    echo "Salom, " . $ism;      // $ism ga nima bersak shuni yozadi
+}
+salomlash("Ali");               // Salom, Ali
+salomlash("Vali");              // Salom, Vali
+// qavs ichidagi $ism bu parametr, unga qiymat beramiz
+
+echo "<br>";
+
+// default qiymatli parametr
+function davlat($nomi = "Ozbekiston")
+{
+    echo "Men " . $nomi . "danman";
+}
+davlat("Turkiya");              // Men Turkiyadanman
+davlat();                       // Men Ozbekistondanman
+// qiymat bermasak default qiymat ishlatiladi
+
+echo "<br>";
+
+// return qaytaradigan funksiya
+function kopaytir($a, $b)
+{
+    return $a * $b;             // natijani qaytaradi
+}
+$natija = kopaytir(4, 5);       // natija 20
+echo $natija;
+// echo ekranga chiqaradi, return esa natijani qaytarib beradi
+// return dan keyin funksiya toxtaydi
+
+echo "<br>";
+
+// tur bilan yozish (type)
+function qosh(int $a, int $b): int
+{
+    return $a + $b;
+}
+echo qosh(5, 5);                // 10
+// int $a  bu kirishi kerak bolgan tur
+// : int   bu qaytadigan tur
+
+echo "<br>";
+
+// global va local ozgaruvchi
+$shahar = "Toshkent";           // tashqarida yaratildi (global)
+function shaharim()
+{
+    global $shahar;             // tashqaridagini ichkariga olib kiradi
+    echo $shahar;               // Toshkent
+}
+shaharim();
+// funksiya ichidan tashqi ozgaruvchini kormaydi, global kerak
+
+echo "<br>";
+
+
+
+// Arrays (massivlar)
+
+// 1. indexed array (raqamli)
+$ranglar = ["qizil", "yashil", "kok"];
+echo $ranglar[0];               // qizil  (sanash 0 dan boshlanadi)
+echo $ranglar[2];               // kok
+// [0] [1] [2] bu index, birinchisi har doim 0
+
+echo "<br>";
+
+// 2. associative array (kalitli)
+$talaba = [
+    "ism"  => "Abdulloh",
+    "yosh" => 23,
+    "shahar" => "Toshkent"
+];
+echo $talaba["ism"];            // Abdulloh
+// => belgisi bilan kalit va qiymat beriladi
+// raqam orniga nom bilan olamiz
+
+echo "<br>";
+
+// 3. multidimensional array (massiv ichida massiv)
+$talabalar = [
+    ["Ali", 20],
+    ["Vali", 22],
+];
+echo $talabalar[1][0];          // Vali
+// birinchi [1] qaysi massiv, ikkinchi [0] uning ichidagi qaysi element
+
+echo "<br>";
+
+// massiv bilan ishlash
+$ranglar[] = "sariq";           // oxiriga qoshadi
+$ranglar[0] = "qora";           // 0 dagi qiymatni almashtiradi
+unset($ranglar[1]);             // 1 dagi elementni ochiradi
+echo count($ranglar);           // 3  (nechta element bor)
+
+echo "<br>";
+
+// array funksiyalari
+$sonlar = [5, 2, 8, 1];
+array_push($sonlar, 10);        // oxiriga qoshadi
+array_pop($sonlar);             // oxirgisini ochiradi
+array_unshift($sonlar, 0);      // boshiga qoshadi
+array_shift($sonlar);           // birinchisini ochiradi
+sort($sonlar);                  // kichikdan kattaga tartiblaydi: 1 2 5 8
+rsort($sonlar);                 // kattadan kichikka: 8 5 2 1
+echo in_array(8, $sonlar);      // 1  (8 bor bolsa true)
+echo implode(", ", $sonlar);    // 8, 5, 2, 1  (massivni matnga aylantiradi)
+// explode esa teskarisi: matnni massivga aylantiradi
+$sozlar = explode(" ", "men php organyapman");   // ["men", "php", "organyapman"]
+
+echo "<br>";
+
+// massivni foreach bilan chiqarish
+foreach ($talaba as $nom => $malumot) {
+    echo $nom . ": " . $malumot . " ";    // ism: Abdulloh yosh: 23 shahar: Toshkent
+}
+
+echo "<br>";
+
+
+
+// var_dump
+
+$butunSon = 25;
+$matn = "salom";
+$haqiqat = true;
+
+var_dump($butunSon);            // int(25)
+var_dump($matn);                // string(5) "salom"
+var_dump($haqiqat);             // bool(true)
+// var_dump qiymatni va uning turini korsatadi
+// string bolsa nechta harf ekanini ham yozadi
+
+echo "<pre>";
+var_dump($talaba);              // massiv ichidagi hammasini turlari bilan korsatadi
+echo "</pre>";
+// <pre> chiroyli qilib qatorma-qator chiqaradi
+// print_r faqat qiymatni korsatadi, var_dump esa turini ham
+
+echo "<br>";
+
+
+
+// die (exit)
+
+$login = true;
+
+if (!$login) {
+    die("Kirish taqiqlangan");  // shu yerda butun kod toxtaydi
+}
+echo "Xush kelibsiz";           // $login true bolgani uchun ishlaydi
+// die xabar chiqaradi va keyingi kodni umuman ishlatmaydi
+// exit ham xuddi shunday ishlaydi
+// die("...") ni pastroqqa yozsak, undan keyingi HTML ham chiqmaydi
+
+// tekshirish uchun kop ishlatiladi: var_dump + die
+// var_dump($talaba); die;     // qiymatni korsatib, kodni toxtatadi
+
 ?>
 
 
