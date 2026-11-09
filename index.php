@@ -504,6 +504,97 @@ echo "Xush kelibsiz";           // $login true bolgani uchun ishlaydi
 // tekshirish uchun kop ishlatiladi: var_dump + die
 // var_dump($talaba); die;     // qiymatni korsatib, kodni toxtatadi
 
+echo "<br>";
+
+
+
+// PHP Forms (formalar)
+// formaning HTML qismi pastda <body> ichida turibdi
+
+// 1. GET va POST farqi
+// GET  - malumot URL da korinadi:  index.php?ism=Ali
+//        qidiruv kabi oddiy narsalar uchun
+// POST - malumot URL da korinmaydi
+//        parol, shaxsiy malumot, katta matnlar uchun
+// formada method="post" yoki method="get" deb tanlanadi
+
+
+// 2. tozalash funksiyasi
+function tozala($malumot)
+{
+    $malumot = trim($malumot);              // boshi va oxiridagi bosh joylarni olib tashlaydi
+    $malumot = stripslashes($malumot);      // \ belgilarni olib tashlaydi
+    $malumot = htmlspecialchars($malumot);  // < > belgilarni oddiy matnga aylantiradi
+    return $malumot;
+}
+// foydalanuvchi yozgan hamma narsani shu funksiyadan otkazamiz
+// htmlspecialchars bolmasa kimdir formaga <script> yozib saytni buzishi mumkin
+
+
+// 3. boshida hammasi bosh
+$formIsm = $formEmail = $formSayt = $formIzoh = $formJins = "";
+$ismXato = $emailXato = $saytXato = $jinsXato = "";
+// bitta qatorda bir nechta ozgaruvchiga "" berish mumkin
+// bosh qoymasak forma birinchi ochilganda ogohlantirish chiqadi
+
+
+// 4. forma yuborilganini tekshirish
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // bu ichidagi kod faqat "Yuborish" bosilganda ishlaydi
+
+    // ism: majburiy + faqat harf va bosh joy
+    if (empty($_POST["ism"])) {
+        $ismXato = "Ism yozish shart";                  // bosh qoldirilsa
+    } else {
+        $formIsm = tozala($_POST["ism"]);
+        if (!preg_match("/^[a-zA-Z-' ]*$/", $formIsm)) {
+            $ismXato = "Faqat harf va bosh joy mumkin"; // raqam yozilsa
+        }
+    }
+    // empty() ichi bosh bolsa true qaytaradi
+    // preg_match matnni namuna (qolip) bilan solishtiradi
+
+    // email: majburiy + togri formatda
+    if (empty($_POST["email"])) {
+        $emailXato = "Email yozish shart";
+    } else {
+        $formEmail = tozala($_POST["email"]);
+        if (!filter_var($formEmail, FILTER_VALIDATE_EMAIL)) {
+            $emailXato = "Email notogri";               // @ yoki . bolmasa
+        }
+    }
+    // filter_var + FILTER_VALIDATE_EMAIL emailni tekshiradi
+
+    // sayt: majburiy emas, lekin yozilsa togri bolishi kerak
+    if (!empty($_POST["sayt"])) {
+        $formSayt = tozala($_POST["sayt"]);
+        if (!filter_var($formSayt, FILTER_VALIDATE_URL)) {
+            $saytXato = "Sayt manzili notogri";         // https:// bolmasa
+        }
+    }
+    // FILTER_VALIDATE_URL sayt manzilini tekshiradi
+
+    // izoh: majburiy emas
+    if (!empty($_POST["izoh"])) {
+        $formIzoh = tozala($_POST["izoh"]);
+    }
+
+    // jins: majburiy
+    if (empty($_POST["jins"])) {
+        $jinsXato = "Jinsni tanlang";
+    } else {
+        $formJins = tozala($_POST["jins"]);
+    }
+}
+// $_SERVER["REQUEST_METHOD"] forma qaysi usulda yuborilganini bildiradi
+// $_POST["ism"] dagi "ism" bu inputdagi name="ism"
+
+
+// 5. $_SERVER["PHP_SELF"]
+// formadagi action="..." malumot qaysi faylga ketishini bildiradi
+// PHP_SELF hozirgi faylning ozi, yani malumot shu index.php ga qaytadi
+// uni ham htmlspecialchars dan otkazamiz, xavfsizlik uchun
+
 ?>
 
 
@@ -526,6 +617,50 @@ echo "Xush kelibsiz";           // $login true bolgani uchun ishlaydi
     <br>
 
     <div>salom</div>
+
+    <!-- PHP Forms: HTML qismi -->
+    <h2>Forma</h2>
+    <p><span style="color: red;">* majburiy</span></p>
+
+    <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+
+        Ism: <input type="text" name="ism" value="<?php echo $formIsm; ?>">
+        <span style="color: red;">* <?php echo $ismXato; ?></span>
+        <br><br>
+
+        Email: <input type="text" name="email" value="<?php echo $formEmail; ?>">
+        <span style="color: red;">* <?php echo $emailXato; ?></span>
+        <br><br>
+
+        Sayt: <input type="text" name="sayt" value="<?php echo $formSayt; ?>">
+        <span style="color: red;"><?php echo $saytXato; ?></span>
+        <br><br>
+
+        Izoh: <textarea name="izoh" rows="3" cols="30"><?php echo $formIzoh; ?></textarea>
+        <br><br>
+
+        Jins:
+        <input type="radio" name="jins" value="erkak" <?php if ($formJins == "erkak") echo "checked"; ?>> Erkak
+        <input type="radio" name="jins" value="ayol" <?php if ($formJins == "ayol") echo "checked"; ?>> Ayol
+        <span style="color: red;">* <?php echo $jinsXato; ?></span>
+        <br><br>
+
+        <input type="submit" value="Yuborish">
+    </form>
+    <!-- value="..." ichida PHP bor, shuning uchun xato bolsa yozilgan narsa ochib ketmaydi -->
+    <!-- checked tanlangan radio tugmani belgilangan holda qoldiradi -->
+
+    <?php
+    // yuborilgan malumotlarni chiqarish
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        echo "<h3>Siz yozgan malumotlar:</h3>";
+        echo "Ism: " . $formIsm . "<br>";
+        echo "Email: " . $formEmail . "<br>";
+        echo "Sayt: " . $formSayt . "<br>";
+        echo "Izoh: " . $formIzoh . "<br>";
+        echo "Jins: " . $formJins . "<br>";
+    }
+    ?>
     <?php
     echo $rang;
 
