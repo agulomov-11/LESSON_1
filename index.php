@@ -42,13 +42,14 @@ resource (references external resources)
 // $srting = "hello";
 // $int = 1234;
 // $float = 1234.1234;
-$bolean = true . false; // true =1 , false = 0
-echo $bolean;
+$bolean = true;   // bool faqat true yoki false bo'ladi
+echo $bolean;     // 1  (echo true ni 1, false ni bo'sh qilib chiqaradi)
+// eslatma: true . false yozilsa bool emas, "1" degan string chiqadi, chunki . matnlarni birlashtiradi
 $array = [
     "name"   => "Abdulloh Gulomov",
     "age"    => 23,
-    "number" => +4571512402,
-    "email"  => "abdulloh.@gmail.com <br>"
+    "number" => "+4571512402",   // telefon string bolishi kerak, int da + va boshidagi 0 yoqoladi
+    "email"  => "abdulloh@gmail.com"   // <br> ni malumot ichiga emas, echo ga yozamiz
 ];
 // oldin $name = ... deb yozilgan edi, u keraksiz 4 ta ozgaruvchi yaratib qoyardi
 print_r($array);
@@ -69,7 +70,7 @@ echo str_replace("men", "u", $gap); // gapni ornini almashtiradi
 echo str_word_count($gap); // gapda nechta soz bor 
 echo strrev($gap); // teskari qaytaradi 
 echo strpos($gap, "olim"); // soz nechinchidan boshlyanyabdi
-echo str_contains($gap, "kim"); // ichidan qidiradi va true false qaytaradi
+var_dump(str_contains($gap, "kim")); // ichidan qidiradi: bool(false). echo false ni bo'sh chiqargani uchun var_dump
 echo str_ends_with($gap, "olim"); // true tugashi 
 echo str_starts_with($gap, "men"); // true boshlanishi 
 
@@ -183,7 +184,7 @@ echo $salom;
 // echo $yosh >= 18 ? "Katta" : "Kichik";   // Katta
 // bu yerda Ternary (? :) shartni tekshiradi bolmasa kichikni qaytaradi
 
-// if ni bir qatorda yozish usuli
+// yuqoridagi ternary ning oddiy if/else bilan yozilishi
 if ($yosh >= 18) {
     echo "Katta";
 } else {
@@ -191,11 +192,13 @@ if ($yosh >= 18) {
 }
 
 $mehmon = $_GET["ism"] ?? "Mehmon";
-echo "Salom, " . $mehmon;
+echo "Salom, " . htmlspecialchars($mehmon);
+// htmlspecialchars bolmasa ?ism=<script>...</script> deb yozib saytga skript kiritish mumkin (XSS)
 
 echo "<pre>";
-print_r($_GET);   // $_GET ichida nima borligini ko'rsatadi
+echo htmlspecialchars(print_r($_GET, true));   // $_GET ichida nima borligini ko'rsatadi
 echo "</pre>";
+// print_r(..., true) ekranga chiqarmaydi, matn qilib qaytaradi, keyin uni tozalaymiz
 // URL'da ism berilmagan bo'lsa, "Mehmon" ishlatiladi
 
 ?>
@@ -523,10 +526,10 @@ echo "<br>";
 function tozala($malumot)
 {
     $malumot = trim($malumot);              // boshi va oxiridagi bosh joylarni olib tashlaydi
-    $malumot = stripslashes($malumot);      // \ belgilarni olib tashlaydi
     $malumot = htmlspecialchars($malumot);  // < > belgilarni oddiy matnga aylantiradi
     return $malumot;
 }
+// stripslashes endi kerak emas: u eski PHP dagi "magic quotes" uchun edi, PHP 5.4 da olib tashlangan
 // foydalanuvchi yozgan hamma narsani shu funksiyadan otkazamiz
 // htmlspecialchars bolmasa kimdir formaga <script> yozib saytni buzishi mumkin
 
@@ -546,11 +549,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["ism"])) {
         $ismXato = "Ism yozish shart";                  // bosh qoldirilsa
     } else {
-        $formIsm = tozala($_POST["ism"]);
-        if (!preg_match("/^[a-zA-Z-' ]*$/", $formIsm)) {
+        $xomIsm = trim($_POST["ism"]);                  // avval tozalanmagan holda tekshiramiz
+        if (!preg_match("/^[a-zA-Z-' ]*$/", $xomIsm)) {
             $ismXato = "Faqat harf va bosh joy mumkin"; // raqam yozilsa
         }
+        $formIsm = tozala($xomIsm);                     // keyin ekranga chiqarish uchun tozalaymiz
     }
+    // muhim: tekshirish tozala() dan OLDIN bolishi kerak
+    // aks holda htmlspecialchars O'tkir ni O&#039;tkir ga aylantiradi va regex xato beradi
     // empty() ichi bosh bolsa true qaytaradi
     // preg_match matnni namuna (qolip) bilan solishtiradi
 
@@ -558,19 +564,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (empty($_POST["email"])) {
         $emailXato = "Email yozish shart";
     } else {
-        $formEmail = tozala($_POST["email"]);
-        if (!filter_var($formEmail, FILTER_VALIDATE_EMAIL)) {
+        $xomEmail = trim($_POST["email"]);
+        if (!filter_var($xomEmail, FILTER_VALIDATE_EMAIL)) {
             $emailXato = "Email notogri";               // @ yoki . bolmasa
         }
+        $formEmail = tozala($xomEmail);
     }
     // filter_var + FILTER_VALIDATE_EMAIL emailni tekshiradi
 
     // sayt: majburiy emas, lekin yozilsa togri bolishi kerak
     if (!empty($_POST["sayt"])) {
-        $formSayt = tozala($_POST["sayt"]);
-        if (!filter_var($formSayt, FILTER_VALIDATE_URL)) {
+        $xomSayt = trim($_POST["sayt"]);
+        if (!filter_var($xomSayt, FILTER_VALIDATE_URL)) {
             $saytXato = "Sayt manzili notogri";         // https:// bolmasa
         }
+        $formSayt = tozala($xomSayt);                   // & belgisi &amp; ga aylanadi, shuning uchun keyin
     }
     // FILTER_VALIDATE_URL sayt manzilini tekshiradi
 
