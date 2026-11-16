@@ -603,6 +603,101 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 // PHP_SELF hozirgi faylning ozi, yani malumot shu index.php ga qaytadi
 // uni ham htmlspecialchars dan otkazamiz, xavfsizlik uchun
 
+
+
+// === Class va Object ===
+// class - andoza (shablon), object - shu andozadan yasalgan narsa
+
+class Hayvon {
+    // === Properties (xususiyatlar) ===
+    public $ism;
+    public $yosh;
+
+    // === Konstruktor ===
+    // object yaratilganda avtomatik ishga tushadi
+    public function __construct($ism, $yosh) {
+        $this->ism = $ism;      // $this joriy objectni bildiradi
+        $this->yosh = $yosh;
+    }
+
+    // === Method (funksiya classi ichida) ===
+    public function salom() {
+        echo "Salom, men {$this->ism}, yoshim {$this->yosh}";
+    }
+
+    // === Destruktor ===
+    // object kerak bolmay qolganda (script tugaganda) ishlaydi
+    public function __destruct() {
+        echo "{$this->ism} object ochirildi <br>";
+    }
+}
+
+// === Object yaratish ===
+$mushuk = new Hayvon("Pisha", 2);
+$mushuk->salom();     // -> metodni chaqirish
+echo "<br>";
+
+echo "<br>";
+
+// === Access Modifiers (ruxsat darajalari) ===
+class Hisob {
+    public $raqam;       // hamma joydan ochiq
+    protected $balans;   // faqat shu class va undan meros olgan classlar
+    private $parol;      // faqat shu classning ozi
+
+    public function __construct($raqam, $balans, $parol) {
+        $this->raqam = $raqam;
+        $this->balans = $balans;
+        $this->parol = $parol;
+    }
+
+    public function balansniKorsat() {
+        echo "Balans: {$this->balans}";   // ichkarida protected/private ham ishlatsa boladi
+    }
+}
+
+$h = new Hisob("12345", 1000, "parol123");
+echo $h->raqam;        // ishlaydi, public
+$h->balansniKorsat();  // ishlaydi
+echo "<br>";
+// echo $h->balans;   // XATO beradi, protected tashqaridan korinmaydi
+// echo $h->parol;    // XATO beradi, private faqat ichkarida
+
+echo "<br>";
+
+// === Inheritance (meros) ===
+// bir class ikkinchi classdan xususiyat va metodlarni oladi
+
+class Odam {
+    public $ism;
+
+    public function __construct($ism) {
+        $this->ism = $ism;
+    }
+
+    public function tanishtir() {
+        echo "Ism: {$this->ism}";
+    }
+}
+
+class Talaba extends Odam {   // extends - meros olish
+    public $universitet;
+
+    public function __construct($ism, $universitet) {
+        parent::__construct($ism);   // ota classning konstruktorini chaqiradi
+        $this->universitet = $universitet;
+    }
+
+    public function tanishtir() {
+        parent::tanishtir();         // ota classning metodini chaqiradi
+        echo ", Universitet: {$this->universitet}";
+    }
+}
+
+$t = new Talaba("Ali", "DTU");
+$t->tanishtir();
+// natija: Ism: Ali, Universitet: DTU
+
 ?>
 
 
